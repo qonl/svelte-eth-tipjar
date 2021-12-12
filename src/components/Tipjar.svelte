@@ -13,6 +13,7 @@
                 method: 'eth_sendTransaction',
                 params: [{
                     from: accounts[0],
+                    // update your account number here
                     to: '0xB5d0b32baF74254FC6bfCeba1ab5393dBe2059C5',
                     value: web3.utils.toHex(wei)
                 }],
