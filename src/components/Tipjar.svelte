@@ -1,29 +1,42 @@
 <script lang="ts">
     const web3 = new Web3(Web3.givenProvider);
-
     let amount: string = '0.01';
 
-    const send = async function (amount: string): Promise<void> {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts'});
-        
-        const wei = web3.utils.toWei(amount, 'ether'); 
-
-        if (accounts.length > 0) {
-            window.ethereum.request({ 
-                method: 'eth_sendTransaction',
-                params: [{
-                    from: accounts[0],
-                    // update your account number here
-                    to: '0xB5d0b32baF74254FC6bfCeba1ab5393dBe2059C5',
-                    value: web3.utils.toHex(wei)
-                }],
-            });
-        }
+    interface Transaction {
+        method: string;
+        params: TransactionParams[];
     }
 
-    const handleSubmit = () => {
+    interface TransactionParams {
+        from: string;
+        to: string;
+        value: string;
+    }
+
+    /**
+     * Sends a payment to the requested address
+     * @param {string} amount - the amount of ETH to send
+     */
+    const send = async function (amount: string = '0.01'): Promise<void> {
+        const accounts: string[] = await window.ethereum.request({ method: 'eth_requestAccounts'});
+        const wei: string = web3.utils.toWei(amount, 'ether');
+        
+        const config: Transaction = { 
+            method: 'eth_sendTransaction',
+            params: [{
+                from: accounts[0],
+                // update your account number here
+                to: '0xB5d0b32baF74254FC6bfCeba1ab5393dBe2059C5',
+                value: web3.utils.toHex(wei)
+            }],
+        };
+
+        accounts.length > 0 && await window.ethereum.request(config as Transaction);;
+    }
+
+    const handleSubmit = (): void => {
         if (window.ethereum) {
-            send(amount);
+            send(amount as string);
         }
     }
 </script>

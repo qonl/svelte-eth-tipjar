@@ -3,8 +3,12 @@
   	import Section from './components/Section.svelte';
 	import Tipjar from './components/Tipjar.svelte';
 
+	interface SectionData {
+		title: string;
+		src: string;
+	};
 
-	const sections = [
+	const sections: SectionData[] = [
 		{
 			src: 'image1.jpg',
 			title: 'Light piece #231'
