@@ -1,6 +1,6 @@
 <script lang="ts">
-    export const src: string = '';
-    export const title: string = '';
+    export let src: string = '';
+    export let title: string = '';
 </script>
 
 <section>
